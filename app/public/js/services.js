@@ -17,6 +17,9 @@ nightServices.factory('nightService', ['$http', '$location',
             var url = appContext + '/api/search/?location=' + location;
             return $http.get(url).then(function (response) {
                 return response.data;
+            }, function (error) {
+                console.log(error);
+                return [];
             });
         };
 

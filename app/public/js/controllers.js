@@ -8,8 +8,12 @@ nightControllers.controller('searchController', ['$scope', '$route', '$rootScope
 
         $scope.form = {};
         $scope.places = {};
+        $scope.appMessage = undefined;
 
         var refreshSearch = function() {
+            if (!$rootScope.userDetails.location) {
+                return;
+            }
             $scope.form.location = $rootScope.userDetails.location;
             $scope.searchLocation();
         };
@@ -18,11 +22,17 @@ nightControllers.controller('searchController', ['$scope', '$route', '$rootScope
 
         $scope.searchLocation = function() {
             $scope.places = {};
+            $scope.appMessage = 'Loading...';
+
             var location = $scope.form.location;
             $scope.lastLocationSearched = '';
             nightService.searchLocation(location).then(function(data) {
                 $scope.lastLocationSearched = location;
                 $scope.places = data;
+
+                if (data.length === 0) {
+                    $scope.appMessage = 'No Results found...';
+                }
             });
         };
 

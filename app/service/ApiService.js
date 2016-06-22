@@ -34,8 +34,6 @@ function ApiService () {
                 }
 
                 var parsedData = JSON.parse(yelpResponseData);
-                console.log(parsedData);
-
                 var businesses = parsedData.businesses;
                 var placesIds = businesses.map(function (e) {
                     return e.id;
@@ -59,15 +57,10 @@ function ApiService () {
 
                             }
 
-                            console.log('##' + JSON.stringify(placeAttendant));
-
                             var attendantsPerPlace = {};
                             placeAttendant.forEach(function (currentValue) {
                                 attendantsPerPlace[currentValue._id] = currentValue.attendants;
                             });
-
-                            console.log('attendantsPerPlace:' + JSON.stringify(attendantsPerPlace));
-
 
                             businesses.forEach(function (currentValue) {
                                 var attendants = attendantsPerPlace[currentValue.id];
@@ -146,8 +139,6 @@ function ApiService () {
             userDetails.username = session.userData.userName;
             userDetails.location = session.userData.location;
         }
-
-        console.log('##userDetails' + JSON.stringify(userDetails));
         res.setHeader('Cache-Control', 'no-cache');
         return res.json(userDetails);
 

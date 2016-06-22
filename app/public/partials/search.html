@@ -1,20 +1,35 @@
-<div  class="">
-    Search location
+<div>
 
-    <form ng-submit="searchLocation()">
-        <input type="text" ng-model="form.location"/>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+    <div class="search-form">
+        <form ng-submit="searchLocation()">
+            <div class="form-group">
+                <label for="location-input">Search location:</label>
+                <input type="text" ng-model="form.location" id="location-input"/>
+                <button type="submit" class="btn btn-primary btn-search-location">Search</button>
+            </div>
+        </form>
+    </div>
 
-    <div ng-repeat="place in places" class="place">
-        <p>
-            {{$index + 1}}. <img ng-src="{{place.image_url}}" /> <a href="#" ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
-            {{place.attendantsCount}} people are attending the event.
-            <button type="button" class="btn bg-info" ng-click="attendEvent(place.id)" ng-show="!place.currentUserIsGoing">I want to go</button>
-            <button type="button" class="btn bg-info" ng-click="leaveEvent(place.id)" ng-show="place.currentUserIsGoing">Not going anymore</button>
-        <p>
-            {{place.snippet_text}}
-        </p>
+    <div ng-repeat="place in places" class="place row">
+        <div class="place-details col-md-9">
+            {{$index + 1}}. <img ng-src="{{place.image_url}}" class="placeImg" /> <a href="#" ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
+            <p>
+                {{place.snippet_text}}
+            </p>
+        </div>
+
+        <div class="controls col-md-2">
+            <p>
+                {{place.attendantsCount}} people are attending.
+            </p>
+
+            <button type="button" class="btn btn-info" ng-click="attendEvent(place.id)" ng-show="!place.currentUserIsGoing">I want to go</button>
+            <button type="button" class="btn btn-warning" ng-click="leaveEvent(place.id)" ng-show="place.currentUserIsGoing">Not going anymore</button>
+        </div>
+    </div>
+
+    <div ng-show="appMessage" class="text-center">
+        {{appMessage}}
     </div>
 
 </div>

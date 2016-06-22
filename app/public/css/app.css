@@ -34,11 +34,11 @@ body {
 .place {
     background-color: #ffffff;
     cursor: pointer;
-    margin: 0.5em auto;
-    min-height: 2em;
+    margin: 1em auto;
+    min-height: 3em;
 }
 
-.place p {
+.place-details {
     margin-left: 2em;
 }
 
@@ -64,12 +64,34 @@ body {
     height: 100%;
 }
 
-
-.help-block {
-    color: red;
-    font-size: 0.8em;
-}
-
 .main {
     padding-bottom: 2em;
+}
+
+.search-form {
+    margin: auto;
+    width: 70%;
+}
+
+.search-form {
+    margin: auto auto 3em;
+}
+
+#location-input {
+    width: 50%;
+}
+
+.btn-search-location {
+    margin-left: 2em;
+    width: 9em;
+}
+
+.placeImg {
+    margin-top: 2em;
+    max-width: 3.5em;
+}
+
+.controls {
+    text-align: center;
+    margin-top: 2em;
 }
