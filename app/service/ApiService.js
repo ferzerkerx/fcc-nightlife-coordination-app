@@ -1,7 +1,7 @@
 'use strict';
 
 var path = process.cwd();
-var Place = require(path + '/app/models/Place.js');
+var PlaceAttendant = require(path + '/app/models/PlaceAttendant.js');
 var OAuth = require('oauth');
 var qs = require("qs");
 
@@ -15,7 +15,7 @@ function ApiService () {
         yelpConsumerKey,
         yelpConsumerSecret,
         '1.0',
-        process.env.APP_URL + '/api/yelp/callback',
+        null,
         'HMAC-SHA1'
     );
 
@@ -35,18 +35,60 @@ function ApiService () {
 
                 var parsedData = JSON.parse(yelpResponseData);
                 console.log(parsedData);
-                res.json(parsedData);
+
+                var businesses = parsedData.businesses;
+                var placesIds = businesses.map(function (e) {
+                    return e.id;
+                });
+
+                PlaceAttendant
+                    .aggregate(
+                        {$match: {place_id: {$in: placesIds}}},
+                        {$group : {
+                            _id : "$place_id",
+                            count: { $sum: 1 },
+                            attendants: {$push : "$username"}
+                        }}
+
+                    )
+                    .exec(
+                        function (mongoErr, placeAttendant) {
+                            if (mongoErr) {
+                                console.log(mongoErr);
+                                return res.status(500).json(mongoErr);
+
+                            }
+
+                            console.log('##' + JSON.stringify(placeAttendant));
+
+                            var attendantsPerPlace = {};
+                            placeAttendant.forEach(function (currentValue) {
+                                attendantsPerPlace[currentValue._id] = currentValue.attendants;
+                            });
+
+                            console.log('attendantsPerPlace:' + JSON.stringify(attendantsPerPlace));
+
+
+                            businesses.forEach(function (currentValue) {
+                                var attendants = attendantsPerPlace[currentValue.id];
+                                if (!attendants) {
+                                    attendants = [];
+                                }
+
+                                currentValue.attendants = attendants;
+                                currentValue.attendantsCount = attendants.length;
+
+                                var session = req.session;
+                                var currentUserIsGoing = false;
+                                if (session.hasOwnProperty('userData')) {
+                                    currentUserIsGoing = attendants.indexOf(session.userData.userName) >= 0;
+                                }
+                                currentValue.currentUserIsGoing = currentUserIsGoing;
+
+                            });
+                            res.json(businesses);
+                    });
             });
-
-        // Populate attendatns
-
-        //Place.find({}, function(err, places){
-        //    if (err) {
-        //        console.log(err);
-        //        return res.json(500, {});
-        //    }
-        //    return res.json(places);
-        //});
     };
 
 
@@ -54,17 +96,40 @@ function ApiService () {
     //TODO validate this service is only invoked whenever a session is present
     this.markGoingToPlace = function (req, res) {
 
-        var placeId =  req.params.pollId;
+        var placeId =  req.params.placeId;
+        var searchedLocation = req.body.location;
 
-        //TODO find place and update attendant counts
+        var userData = req.session.userData;
+        userData.location = searchedLocation;
+
+        var placeAttendant = new PlaceAttendant({
+            place_id: placeId,
+            username: userData.userName
+        });
+
+        placeAttendant.save(function (err, placeAttendant) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json(err);
+            }
+            return res.json(placeAttendant);
+        });
     };
 
 
     //TODO validate this service is only invoked whenever a session is present
     this.unmarkGoingToPlace = function(req, res) {
-        var placeId =  req.params.pollId;
+        var placeId =  req.params.placeId;
 
-        //TODO find place and update attendant counts
+        PlaceAttendant.findOneAndRemove({ place_id: placeId, username: req.session.userData.userName}, function(err, placeAttendant) {
+
+            if (err) {
+                console.log(err);
+                return res.status(500).json(err);
+            }
+
+            return res.json(placeAttendant);
+        });
     };
 
 
@@ -79,7 +144,11 @@ function ApiService () {
             userDetails.isLogged = true;
             userDetails.name = session.userData.name;
             userDetails.username = session.userData.userName;
+            userDetails.location = session.userData.location;
         }
+
+        console.log('##userDetails' + JSON.stringify(userDetails));
+        res.setHeader('Cache-Control', 'no-cache');
         return res.json(userDetails);
 
     };

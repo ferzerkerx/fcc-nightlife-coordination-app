@@ -15,10 +15,6 @@ var nightApp = angular.module('nightApp', [
 nightApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-        when('/places/', { //TODO restrict to session only
-            templateUrl: 'public/partials/places.html',
-            controller: 'placesController'
-        }).
         when('/search', {
             templateUrl: 'public/partials/search.html',
             controller: 'searchController'

@@ -8,8 +8,10 @@
 
     <div ng-repeat="place in places" class="place">
         <p>
-            {{$index + 1}}. <img ng-src="{{place.image_url}}" /> {{place.name}}
-        </p>
+            {{$index + 1}}. <img ng-src="{{place.image_url}}" /> <a href="#" ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
+            {{place.attendantsCount}} people are attending the event.
+            <button type="button" class="btn bg-info" ng-click="attendEvent(place.id)" ng-show="!place.currentUserIsGoing">I want to go</button>
+            <button type="button" class="btn bg-info" ng-click="leaveEvent(place.id)" ng-show="place.currentUserIsGoing">Not going anymore</button>
         <p>
             {{place.snippet_text}}
         </p>

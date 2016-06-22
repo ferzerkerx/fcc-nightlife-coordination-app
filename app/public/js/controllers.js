@@ -3,30 +3,39 @@
 
 var nightControllers = angular.module('nightControllers', []);
 
-nightControllers.controller('placesController', ['$scope', '$route', '$window','$location', 'nightService',
-    function ($scope, $route, $window, $location, nightService) {
-
-        var listPlaces = function() {
-            nightService.listPlaces().then(function(data) {
-                $scope.places = data;
-            });
-        };
-
-        listPlaces();
-    }]);
-
-nightControllers.controller('searchController', ['$scope', '$route', '$window','$location', 'nightService',
-    function ($scope, $route, $window, $location, nightService) {
+nightControllers.controller('searchController', ['$scope', '$rootScope',  '$route', '$window','$location', 'nightService',
+    function ($scope, $route, $rootScope, $window, $location, nightService) {
 
         $scope.form = {};
         $scope.places = {};
 
-        $scope.searchLocation = function() {
-            var location = $scope.form.location;
-            nightService.searchLocation(location).then(function(data) {
+        console.log('searchController.....');
+        $scope.$on('userDataReceivedEvent', function(data) {
+            console.log('userDataReceivedEvent:'  + JSON.stringify(data));
+            $scope.form.location = data.location;
+            $scope.searchLocation();
+        });
 
-                $scope.places = data.businesses;
-                console.log(JSON.stringify($scope.places));
+        $scope.searchLocation = function() {
+            $scope.places = {};
+            var location = $scope.form.location;
+            $scope.lastLocationSearched = '';
+            nightService.searchLocation(location).then(function(data) {
+                $scope.lastLocationSearched = location;
+                $scope.places = data;
+            });
+        };
+
+        $scope.attendEvent = function(placeId) {
+            var location = $scope.lastLocationSearched;
+            nightService.markGoingToPlace(placeId, location).then(function(data) {
+                $scope.searchLocation();
+            });
+        };
+
+        $scope.leaveEvent = function(placeId) {
+            nightService.unmarkGoingToPlace(placeId).then(function(data) {
+                $scope.searchLocation();
             });
         };
     }]);
@@ -51,6 +60,8 @@ nightControllers.controller('barController', ['$scope', '$rootScope', '$route', 
 
         nightService.userDetails().then(function(data) {
             $rootScope.userDetails = data;
+            console.log('emit userDataReceivedEvent:'  + JSON.stringify(data));
+            $scope.$emit('userDataReceivedEvent', data);
         });
-        
+
     }]);

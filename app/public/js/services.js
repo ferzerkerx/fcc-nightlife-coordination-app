@@ -21,8 +21,9 @@ nightServices.factory('nightService', ['$http', '$location',
         };
 
 
-        var markGoingToPlace = function(placeId) {
+        var markGoingToPlace = function(placeId, location) {
             var url = appContext + '/api/going/' + placeId;
+            var data = {location: location}
             return $http.post(url, data).then(function (response) {
                 return response.data;
             });
@@ -59,6 +60,8 @@ nightServices.factory('nightService', ['$http', '$location',
 
         return {
             searchLocation: searchLocation,
+            markGoingToPlace: markGoingToPlace,
+            unmarkGoingToPlace: unmarkGoingToPlace,
             doLogin: doLogin,
             doLogout: doLogout,
             userDetails: userDetails
