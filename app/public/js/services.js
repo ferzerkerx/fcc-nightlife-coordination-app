@@ -14,7 +14,7 @@ nightServices.factory('nightService', ['$http', '$location',
         }
 
         var searchLocation = function(location) {
-            var url = appContext + '/api/search/' + location;
+            var url = appContext + '/api/search/?location=' + location;
             return $http.get(url).then(function (response) {
                 return response.data;
             });
@@ -58,6 +58,7 @@ nightServices.factory('nightService', ['$http', '$location',
         };
 
         return {
+            searchLocation: searchLocation,
             doLogin: doLogin,
             doLogout: doLogout,
             userDetails: userDetails

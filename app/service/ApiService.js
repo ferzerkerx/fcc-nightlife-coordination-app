@@ -7,8 +7,37 @@ var qs = require("qs");
 
 function ApiService () {
 
+    var yelpConsumerKey = process.env.YELP_CONSUMER_KEY;
+    var yelpConsumerSecret = process.env.YELP_CONSUMER_SECRET;
+    var yelpOAuth = new OAuth.OAuth(
+        'https://api.yelp.com/oauth/request_token',
+        'https://api.yelp.com/oauth/access_token',
+        yelpConsumerKey,
+        yelpConsumerSecret,
+        '1.0',
+        process.env.APP_URL + '/api/yelp/callback',
+        'HMAC-SHA1'
+    );
+
     this.search = function (req, res) {
-        //TODO Call api to find places
+        var urlParams = req.url.substring(req.url.indexOf('?') + 1);
+        var urlComponents = qs.parse(urlParams);
+        var location =  urlComponents.location;
+
+        yelpOAuth.get('https://api.yelp.com/v2/search/?category_filter=nightlife&location=' + location,
+            process.env.YELP_TOKEN,
+            process.env.YELP_TOKEN_SECRET,
+            function (err, yelpResponseData) {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json(err);
+                }
+
+                var parsedData = JSON.parse(yelpResponseData);
+                console.log(parsedData);
+                res.json(parsedData);
+            });
+
         // Populate attendatns
 
         //Place.find({}, function(err, places){
@@ -31,6 +60,7 @@ function ApiService () {
     };
 
 
+    //TODO validate this service is only invoked whenever a session is present
     this.unmarkGoingToPlace = function(req, res) {
         var placeId =  req.params.pollId;
 

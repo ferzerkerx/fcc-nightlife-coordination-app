@@ -1,4 +1,18 @@
 <div  class="">
     Search location
 
+    <form ng-submit="searchLocation()">
+        <input type="text" ng-model="form.location"/>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div ng-repeat="place in places" class="place">
+        <p>
+            {{$index + 1}}. <img ng-src="{{place.image_url}}" /> {{place.name}}
+        </p>
+        <p>
+            {{place.snippet_text}}
+        </p>
+    </div>
+
 </div>

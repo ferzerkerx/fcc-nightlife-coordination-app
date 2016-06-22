@@ -7,7 +7,7 @@ module.exports = function (app) {
 
     var apiService = new ApiService();
 
-    app.route('/api/search')
+    app.route('/api/search/')
         .get(apiService.search);
 
     app.route('/api/going/:placeId')

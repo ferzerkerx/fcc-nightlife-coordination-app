@@ -8,7 +8,7 @@ nightControllers.controller('placesController', ['$scope', '$route', '$window','
 
         var listPlaces = function() {
             nightService.listPlaces().then(function(data) {
-                $scope.polls = data;
+                $scope.places = data;
             });
         };
 
@@ -18,7 +18,17 @@ nightControllers.controller('placesController', ['$scope', '$route', '$window','
 nightControllers.controller('searchController', ['$scope', '$route', '$window','$location', 'nightService',
     function ($scope, $route, $window, $location, nightService) {
 
-        //TODO
+        $scope.form = {};
+        $scope.places = {};
+
+        $scope.searchLocation = function() {
+            var location = $scope.form.location;
+            nightService.searchLocation(location).then(function(data) {
+
+                $scope.places = data.businesses;
+                console.log(JSON.stringify($scope.places));
+            });
+        };
     }]);
 
 
