@@ -3,18 +3,18 @@
 
 var nightControllers = angular.module('nightControllers', []);
 
-nightControllers.controller('searchController', ['$scope', '$rootScope',  '$route', '$window','$location', 'nightService',
+nightControllers.controller('searchController', ['$scope', '$route', '$rootScope', '$window','$location', 'nightService',
     function ($scope, $route, $rootScope, $window, $location, nightService) {
 
         $scope.form = {};
         $scope.places = {};
 
-        console.log('searchController.....');
-        $scope.$on('userDataReceivedEvent', function(data) {
-            console.log('userDataReceivedEvent:'  + JSON.stringify(data));
-            $scope.form.location = data.location;
+        var refreshSearch = function() {
+            $scope.form.location = $rootScope.userDetails.location;
             $scope.searchLocation();
-        });
+        };
+
+        $scope.$on('userDataReceivedEvent', refreshSearch);
 
         $scope.searchLocation = function() {
             $scope.places = {};
@@ -38,12 +38,15 @@ nightControllers.controller('searchController', ['$scope', '$rootScope',  '$rout
                 $scope.searchLocation();
             });
         };
+
+        if ($rootScope.userDetails && $rootScope.userDetails.location) {
+            refreshSearch();
+        }
     }]);
 
 
 nightControllers.controller('barController', ['$scope', '$rootScope', '$route', '$routeParams' ,'$window','$location', 'nightService',
     function ($scope, $rootScope, $route, $routeParams , $window, $location, nightService) {
-
         $rootScope.userDetails = {};
         $scope.twitterLogin = function() {
             nightService.doLogin().then(function(data) {
@@ -60,7 +63,6 @@ nightControllers.controller('barController', ['$scope', '$rootScope', '$route', 
 
         nightService.userDetails().then(function(data) {
             $rootScope.userDetails = data;
-            console.log('emit userDataReceivedEvent:'  + JSON.stringify(data));
             $scope.$emit('userDataReceivedEvent', data);
         });
 
