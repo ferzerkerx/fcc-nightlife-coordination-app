@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="nightApp">
+<head>
+    <meta charset="UTF-8">
+    <title>FCC Nightlife Coordination App</title>
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/app.css">
+</head>
+<body>
+
+<div ng-controller="barController" class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">FCC Nightlife Coordination App</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="!userDetails.isLogged"><button ng-click="twitterLogin()" class="btn btn-primary sign-in">Sign in with twitter</button></li>
+
+                <li ng-show="userDetails.isLogged">
+                <div class="dropdown sign-in">
+
+                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                        {{userDetails.name}}
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li class="text-center"><button ng-click="twitterLogout()" class="btn btn-danger sign-out">Sign out</button></li>
+                    </ul>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</div>
+
+<div class="container main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main text-center">
+                <h1>FCC Nightlife Coordination App</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-view class="col-md-12">
+
+        </div>
+    </div>
+</div>
+<div class="text-center by">
+    <a href="https://github.com/ferzerkerx" target="_blank">by ferzerkerx</a>
+</div>
+
+<script src="public/bower_components/jquery/dist/jquery.js"></script>
+<script src="public/bower_components/angular/angular.js"></script>
+<script src="public/bower_components/angular-route/angular-route.js"></script>
+<script src="public/bower_components/angular-resource/angular-resource.js"></script>
+<script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="public/js/app.js"></script>
+<script src="public/js/controllers.js"></script>
+<script src="public/js/services.js"></script>
+</body>
+</html>
