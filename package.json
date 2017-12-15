@@ -18,19 +18,27 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "webpack"
   },
   "author": "Fernando Montes",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "bower": "^1.7.9",
     "connect-mongo": "^1.2.0",
     "dotenv": "^1.2.0",
     "express": "^4.12.4",
     "express-session": "^1.13.0",
     "mongoose": "^4.1.0",
     "oauth": "^0.9.14",
-    "qs": "^6.2.0"
+    "qs": "^6.2.0",
+    "angular": "1.6.1",
+    "jquery": "3.2.1",
+    "bootstrap": "3.3.7",
+    "angular-route": "1.6.1",
+    "angular-resource": "1.6.1"
+  },
+   "devDependencies": {
+    "copy-webpack-plugin": "^4.0.1",
+    "webpack": "^2.6.1"
   }
 }
