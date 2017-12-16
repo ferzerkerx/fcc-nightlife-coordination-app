@@ -12,7 +12,7 @@
 
     <div ng-repeat="place in places" class="place row">
         <div class="place-details col-md-9">
-            {{$index + 1}}. <img ng-src="{{place.image_url}}" class="placeImg" /> <a href="#" ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
+            {{$index + 1}}. <img ng-src="{{place.image_url}}" class="placeImg" alt="{{place.image_url}}"/> <a href="#" ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
             <p>
                 {{place.snippet_text}}
             </p>
