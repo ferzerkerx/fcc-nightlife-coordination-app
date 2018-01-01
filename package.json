@@ -31,11 +31,11 @@
     "mongoose": "^4.1.0",
     "oauth": "^0.9.14",
     "qs": "^6.2.0",
-    "angular": "1.6.1",
+    "angular": "1.6.7",
     "jquery": "3.2.1",
     "bootstrap": "3.3.7",
-    "angular-route": "1.6.1",
-    "angular-resource": "1.6.1"
+    "angular-route": "1.6.7",
+    "angular-resource": "1.6.7"
   },
    "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",
