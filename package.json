@@ -38,6 +38,9 @@
     "popper.js": "^1.12.9",
     "qs": "^6.2.0"
   },
+   "resolutions": {
+    "**/mpath": "^0.5.1"
+  },
   "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",
     "webpack": "^2.6.1"
