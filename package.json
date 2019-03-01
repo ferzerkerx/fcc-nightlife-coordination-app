@@ -28,14 +28,14 @@
     "angular-route": "1.6.9",
     "body-parser": "^1.15.1",
     "bootstrap": "^4.3.1",
-    "connect-mongo": "^1.2.0",
+    "connect-mongo": "^2.0.3",
     "dotenv": "^1.2.0",
     "express": "^4.12.4",
     "express-session": "^1.13.0",
     "jquery": "3.2.1",
-    "mongoose": "^5.0.17",
+    "mongoose": "^5.4.16",
     "oauth": "^0.9.14",
-    "popper.js": "^1.12.9",
+    "popper.js": "^1.14.7",
     "qs": "^6.2.0"
   },
    "resolutions": {
