@@ -28,7 +28,7 @@
     "angular-route": "1.6.9",
     "body-parser": "^1.15.1",
     "bootstrap": "^4.3.1",
-    "connect-mongo": "^2.0.3",
+    "connect-mongo": "^3.0.0",
     "dotenv": "^1.2.0",
     "express": "^4.12.4",
     "express-session": "^1.13.0",
