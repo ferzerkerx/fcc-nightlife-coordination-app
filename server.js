@@ -13,7 +13,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('dotenv').load();
+require('dotenv').config();
 
 mongoose.connect(process.env.MONGO_URI);
 
