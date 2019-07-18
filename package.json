@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.6.0",
-    "webpack": "^2.6.1"
+    "webpack": "^4.36.1"
   }
 }
