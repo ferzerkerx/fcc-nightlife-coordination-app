@@ -35,7 +35,7 @@
     "jquery": "3.4.1",
     "mongoose": "^5.4.16",
     "oauth": "^0.9.14",
-    "popper.js": "^1.14.7",
+    "popper.js": "^1.15.0",
     "qs": "^6.7.0"
   },
    "resolutions": {
