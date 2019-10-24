@@ -605,9 +605,9 @@ concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-connect-mongo@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/connect-mongo/-/connect-mongo-3.0.0.tgz#8d038b024202a0d63d922a5a135adf243ab9f64f"
+connect-mongo@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/connect-mongo/-/connect-mongo-3.1.0.tgz#2a98efa834de7e9e63005e24fec5dcf8d38b3cca"
   dependencies:
     mongodb "^3.1.0"
 
