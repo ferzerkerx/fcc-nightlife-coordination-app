@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "jquery": "3.4.1",
-    "mongoose": "^5.8.4",
+    "mongoose": "^5.12.5",
     "oauth": "^0.9.14",
     "popper.js": "^1.16.0",
     "qs": "^6.9.1"
